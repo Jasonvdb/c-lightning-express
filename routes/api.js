@@ -4,7 +4,6 @@ var LightningClient = require("lightning-client");
 
 var client = new LightningClient("/root/.lightning", true);
 
-/* GET users listing. */
 router.get("/", function(req, res, next) {
 	//TODO list available functions here
 	res.send("Available functions coming soon.");
@@ -17,7 +16,7 @@ router.get("/info", function(req, res, next) {
 			res.json({ status: "success", info });
 		})
 		.catch(errorResult => {
-			res.json({ status: "error", error: errorResult.error });
+			res.status(400).json({ status: "error", error: errorResult.error });
 		});
 });
 
@@ -28,7 +27,7 @@ router.get("/peers", function(req, res, next) {
 			res.json({ status: "success", peers: result.peers });
 		})
 		.catch(errorResult => {
-			res.json({ status: "error", error: errorResult.error });
+			res.status(400).json({ status: "error", error: errorResult.error });
 		});
 });
 
@@ -43,7 +42,7 @@ router.get("/invoice", function(req, res, next) {
 			res.json({ status: "success", invoice });
 		})
 		.catch(errorResult => {
-			res.json({ status: "error", error: errorResult.error });
+			res.status(400).json({ status: "error", error: errorResult.error });
 		});
 });
 
@@ -56,7 +55,7 @@ router.get("/decodepay", function(req, res, next) {
 			res.json({ status: "success", invoice });
 		})
 		.catch(errorResult => {
-			res.json({ status: "error", error: errorResult.error });
+			res.status(400).json({ status: "error", error: errorResult.error });
 		});
 });
 
@@ -69,7 +68,7 @@ router.get("/pay", function(req, res, next) {
 			res.json({ status: "success", invoice });
 		})
 		.catch(errorResult => {
-			res.json({ status: "error", error: errorResult.error });
+			res.status(400).json({ status: "error", error: errorResult.error });
 		});
 });
 
