@@ -6,43 +6,71 @@ var client = new LightningClient("/root/.lightning", true);
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
-	res.send("respond with a resource");
+	//TODO list available functions here
+	res.send("Available functions coming soon.");
 });
 
 router.get("/info", function(req, res, next) {
 	client
 		.getinfo()
 		.then(info => {
-			client
-				.listpeers()
-				.then(peers => {
-					res.json({ status: "success", info, peers: peers.peers });
-				})
-				.catch(error => {
-					res.json({ status: "error", error });
-				});
+			res.json({ status: "success", info });
 		})
-		.catch(error => {
-			res.json({ result: "error", error });
+		.catch(errorResult => {
+			res.json({ status: "error", error: errorResult.error });
+		});
+});
+
+router.get("/peers", function(req, res, next) {
+	client
+		.listpeers()
+		.then(result => {
+			res.json({ status: "success", peers: result.peers });
+		})
+		.catch(errorResult => {
+			res.json({ status: "error", error: errorResult.error });
 		});
 });
 
 router.get("/invoice", function(req, res, next) {
 	var label = req.query.label;
 	var description = req.query.description;
+	var satoshis = req.query.description;
 
 	client
-		.invoice(1000, label, description, 3600)
+		.invoice(satoshis, label, description, 3600)
 		.then(invoice => {
 			res.json({ status: "success", invoice });
 		})
-		.catch(error => {
-			res.json({ result: "error", error });
+		.catch(errorResult => {
+			res.json({ status: "error", error: errorResult.error });
+		});
+});
+
+router.get("/decodepay", function(req, res, next) {
+	var bolt11 = req.query.bolt11;
+
+	client
+		.decodepay(bolt11)
+		.then(invoice => {
+			res.json({ status: "success", invoice });
+		})
+		.catch(errorResult => {
+			res.json({ status: "error", error: errorResult.error });
 		});
 });
 
 router.get("/pay", function(req, res, next) {
-	res.json({ result: "success" });
+	var bolt11 = req.query.bolt11;
+
+	client
+		.pay(bolt11)
+		.then(invoice => {
+			res.json({ status: "success", invoice });
+		})
+		.catch(errorResult => {
+			res.json({ status: "error", error: errorResult.error });
+		});
 });
 
 module.exports = router;
