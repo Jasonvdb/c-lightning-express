@@ -83,7 +83,7 @@ router.get("/docs", authenticateRequest, function(req, res, next) {
 	});
 });
 
-router.get("/getinfo", function(req, res, next) {
+router.get("/getinfo", authenticateRequest, function(req, res, next) {
 	client
 		.getinfo()
 		.then(info => {
@@ -94,7 +94,7 @@ router.get("/getinfo", function(req, res, next) {
 		});
 });
 
-router.get("/listpayments", function(req, res, next) {
+router.get("/listpayments", authenticateRequest, function(req, res, next) {
 	client
 		.listpayments()
 		.then(result => {
@@ -105,7 +105,7 @@ router.get("/listpayments", function(req, res, next) {
 		});
 });
 
-router.get("/listpeers", function(req, res, next) {
+router.get("/listpeers", authenticateRequest, function(req, res, next) {
 	client
 		.listpeers()
 		.then(result => {
@@ -116,7 +116,7 @@ router.get("/listpeers", function(req, res, next) {
 		});
 });
 
-router.get("/listfunds", function(req, res, next) {
+router.get("/listfunds", authenticateRequest, function(req, res, next) {
 	client
 		.listfunds()
 		.then(result => {
@@ -127,7 +127,7 @@ router.get("/listfunds", function(req, res, next) {
 		});
 });
 
-router.get("/invoice", function(req, res, next) {
+router.get("/invoice", authenticateRequest, function(req, res, next) {
 	var satoshis = req.query.satoshis;
 	var label = req.query.label;
 	var description = req.query.description;
@@ -142,7 +142,7 @@ router.get("/invoice", function(req, res, next) {
 		});
 });
 
-router.get("/connect", function(req, res, next) {
+router.get("/connect", authenticateRequest, function(req, res, next) {
 	var nodeId = req.query.nodeId;
 	var ipAddress = req.query.ipAddress;
 	var port = req.query.port;
@@ -161,7 +161,7 @@ router.get("/connect", function(req, res, next) {
 		});
 });
 
-router.get("/fundchannel", function(req, res, next) {
+router.get("/fundchannel", authenticateRequest, function(req, res, next) {
 	var nodeId = req.query.nodeId;
 	var satoshis = req.query.satoshis;
 
@@ -175,7 +175,7 @@ router.get("/fundchannel", function(req, res, next) {
 		});
 });
 
-router.get("/decodepay", function(req, res, next) {
+router.get("/decodepay", authenticateRequest, function(req, res, next) {
 	var bolt11 = req.query.bolt11;
 
 	client
@@ -188,7 +188,7 @@ router.get("/decodepay", function(req, res, next) {
 		});
 });
 
-router.get("/pay", function(req, res, next) {
+router.get("/pay", authenticateRequest, function(req, res, next) {
 	//Sometimes scans have this in the string, remove it in case
 	var bolt11 = req.query.bolt11.replace("lightning:", "");
 
