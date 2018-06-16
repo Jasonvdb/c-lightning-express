@@ -1,16 +1,84 @@
 var express = require("express");
 var router = express.Router();
 var LightningClient = require("lightning-client");
+var crypto = require("crypto");
 
-var client = new LightningClient("/root/.lightning", true);
+var apiKey = process.env.API_KEY;
+var secret = process.env.SECRET;
+var lightningPath = process.env.LIGHTNING_PATH; // usually "/root/.lightning";
 
-//TODO intercept request
-//Check the API key
-//Check the signed URL matched the url signed with the secret on the server
+//Check required environment variables are set
+var envErrors = [];
+if (!apiKey) {
+	envErrors.push("Please set API_KEY");
+}
 
-router.get("/", function(req, res, next) {
-	//TODO list available functions here
-	res.send("Available functions coming soon.");
+if (!secret) {
+	envErrors.push("Please set SECRET");
+}
+
+if (!lightningPath) {
+	envErrors.push(
+		"Please set LIGHTNING_PATH (Directory of where c-lighting was installed)"
+	);
+}
+
+if (envErrors.length > 0) {
+	console.error("Please set required environment variables:");
+	for (let index = 0; index < envErrors.length; index++) {
+		console.error(envErrors[index]);
+	}
+	process.exit(1);
+}
+
+var client = new LightningClient(lightningPath, true);
+
+function authenticateRequest(req, res, next) {
+	var requestApiKey = req.query.apiKey;
+	if (!requestApiKey) {
+		console.error("Missing API key");
+		res.status(400).json({
+			status: "error",
+			error: "Missing API key in request."
+		});
+		return;
+	}
+
+	if (apiKey !== requestApiKey) {
+		console.error("Invalid API key");
+		res.status(400).json({
+			status: "error",
+			error: "Invalid API key in request."
+		});
+		return;
+	}
+
+	var urlPath = "/api" + req.url;
+	var apisign = req.headers.apisign;
+
+	const checkSignature = crypto
+		.createHmac("sha256", secret)
+		.update(urlPath)
+		.digest("hex");
+
+	if (checkSignature !== apisign) {
+		console.error("Invalid signature");
+		res.status(400).json({
+			status: "error",
+			error: "Request signature invalid. Check secret."
+		});
+		return;
+	}
+
+	//Request is valid
+	next();
+}
+
+router.get("/docs", authenticateRequest, function(req, res, next) {
+	res.json({
+		status: "success",
+		documentation: "https://github.com/Jasonvdb/c-lightning-express"
+	});
 });
 
 router.get("/getinfo", function(req, res, next) {
