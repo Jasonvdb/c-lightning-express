@@ -12,4 +12,4 @@ export LIGHTNING_PATH=/root/.lightning
 export API_KEY=replaceme
 export SECRET=replaceme
 
-forever start --sourceDir /var/www/lightning-api ./bin/www >> ~/c-lightning-express-forever-log.txt 2>&1
+forever start --sourceDir /var/www/c-lightning-express ./bin/www >> ~/c-lightning-express-forever-log.txt 2>&1
