@@ -3,9 +3,11 @@ var router = express.Router();
 var LightningClient = require("lightning-client");
 var crypto = require("crypto");
 
-var apiKey = process.env.API_KEY;
-var secret = process.env.SECRET;
-var lightningPath = process.env.LIGHTNING_PATH; // usually "/root/.lightning";
+var config = require("../config");
+
+var apiKey = config.apiKey;
+var secret = config.secret;
+var lightningPath = config.lightningPath;
 
 //Check required environment variables are set
 var envErrors = [];
