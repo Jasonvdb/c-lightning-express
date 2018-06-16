@@ -1,0 +1,29 @@
+{
+	"extends": "eslint:recommended",
+	"parserOptions": {
+		"ecmaVersion": 2015
+	},
+	"rules": {
+		"max-len": 0,
+		"global-require": 0,
+		"no-nested-ternary": 0,
+		"camelcase": 0,
+		"no-underscore-dangle": 0,
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
+		"no-unused-vars": "warn",
+		"no-console": "off"
+	},
+	"globals": {
+		"__dirname": false,
+		"require": false,
+		"module": false,
+		"process": false,
+		"console": false,
+		"document": false,
+		"jQuery": false,
+		"$": false,
+		"window": false,
+		"setInterval": false,
+		"setTimeout": false
+	}
+}
