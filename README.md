@@ -4,6 +4,8 @@ A rest API built with NodeJS and Express for interacting with your Bitcoin [c-li
 
 This is the backend for the PayBolts app ([https://paybolts.com/](https://paybolts.com/)) but can be used for remotely interacting with your Bitcoin lightning node through any app you're building.
 
+If you're looking for instructions on setting up your lightning node check out this [Medium article](https://medium.com/@Jayvdb/setting-up-and-transacting-on-the-bitcoin-lightning-network-a9ada42ec305).
+
 ## Installation
 
 ```
