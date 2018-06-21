@@ -132,8 +132,9 @@ router.get("/invoice", authenticateRequest, function(req, res, next) {
 	var label = req.query.label;
 	var description = req.query.description;
 
+	//satoshis to msatoshis
 	client
-		.invoice(satoshis, label, description, 3600)
+		.invoice(satoshis*1000, label, description, 3600)
 		.then(invoice => {
 			res.json({ status: "success", invoice });
 		})
