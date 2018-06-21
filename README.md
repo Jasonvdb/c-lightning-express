@@ -24,9 +24,8 @@ Make sure lightningPath is the absolute path to where you installed c-lightning.
 
 ```javascript
 module.exports = {
-	apiKey: "MY_API_KEY",
-	secret: "MY_SECRET",
-	lightningPath: "/root/.lightning"
+  apiKey: "MY_API_KEY",
+  secret: "MY_SECRET",
+  lightningPath: "/root/.lightning"
 };
-
 ```
