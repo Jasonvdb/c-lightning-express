@@ -76,6 +76,19 @@ function authenticateRequest(req, res, next) {
 	next();
 }
 
+router.get("/", function(req, res, next) {
+	client
+		.getinfo()
+		.then(info => {
+			res.render("api", {
+				info
+			});
+		})
+		.catch(errorResult => {
+			res.status(400).json({ status: "error", error: errorResult.error });
+		});
+});
+
 router.get("/docs", authenticateRequest, function(req, res, next) {
 	res.json({
 		status: "success",
@@ -134,7 +147,7 @@ router.get("/invoice", authenticateRequest, function(req, res, next) {
 
 	//satoshis to msatoshis
 	client
-		.invoice(satoshis*1000, label, description, 3600)
+		.invoice(satoshis * 1000, label, description, 3600)
 		.then(invoice => {
 			res.json({ status: "success", invoice });
 		})
