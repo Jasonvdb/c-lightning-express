@@ -221,8 +221,8 @@ router.get("/listinvoices", authenticateRequest, function(req, res, next) {
 
 	client
 		.listinvoices(label)
-		.then(invoices => {
-			res.json({ status: "success", invoices });
+		.then(result => {
+			res.json({ status: "success", result });
 		})
 		.catch(errorResult => {
 			res.status(400).json({ status: "error", error: errorResult.error });
@@ -232,8 +232,8 @@ router.get("/listinvoices", authenticateRequest, function(req, res, next) {
 router.get("/delexpiredinvoice", authenticateRequest, function(req, res, next) {
 	client
 		.delexpiredinvoice()
-		.then(invoices => {
-			res.json({ status: "success", invoices });
+		.then(result => {
+			res.json({ status: "success", result });
 		})
 		.catch(errorResult => {
 			res.status(400).json({ status: "error", error: errorResult.error });
