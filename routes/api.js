@@ -216,4 +216,28 @@ router.get("/pay", authenticateRequest, function(req, res, next) {
 		});
 });
 
+router.get("/listinvoices", authenticateRequest, function(req, res, next) {
+	var label = req.query.label ? req.query.label : undefined;
+
+	client
+		.listinvoices(label)
+		.then(invoices => {
+			res.json({ status: "success", invoices });
+		})
+		.catch(errorResult => {
+			res.status(400).json({ status: "error", error: errorResult.error });
+		});
+});
+
+router.get("/delexpiredinvoice", authenticateRequest, function(req, res, next) {
+	client
+		.delexpiredinvoice()
+		.then(invoices => {
+			res.json({ status: "success", invoices });
+		})
+		.catch(errorResult => {
+			res.status(400).json({ status: "error", error: errorResult.error });
+		});
+});
+
 module.exports = router;
